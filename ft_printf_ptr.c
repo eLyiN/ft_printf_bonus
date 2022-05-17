@@ -6,7 +6,7 @@
 /*   By: aarribas <aarribas@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 08:47:24 by aarribas          #+#    #+#             */
-/*   Updated: 2022/05/14 23:05:26 by aarribas         ###   ########.fr       */
+/*   Updated: 2022/05/16 23:28:41 by aarribas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,15 @@ int	ft_print_pointer(t_print *tab)
 	ptr = va_arg(tab->args, unsigned long long);
 	print_length = 0;
 	if (ptr == 0)
+	{
+		if (tab->wdt && !tab->dash)
+			ft_right_cs(tab, 5);
 		print_length += write(1, "(nil)", 5);
+		if (tab->wdt && tab->dash)
+			ft_left_cs(tab, 5);
+		tab->tl += 5;
+		return (1);
+	}
 	else
 	{
 		print_length += write(1, "0x", 2);

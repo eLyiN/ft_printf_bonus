@@ -6,7 +6,7 @@
 /*   By: aarribas <aarribas@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 22:45:58 by aarribas          #+#    #+#             */
-/*   Updated: 2022/05/14 23:15:05 by aarribas         ###   ########.fr       */
+/*   Updated: 2022/05/16 21:37:11 by aarribas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,4 +50,16 @@ char	*ft_uitoa(unsigned int n)
 		i--;
 	}
 	return (fresh_str);
+}
+
+void	process_wdt_p(t_print *tab, const char *format, int pos)
+{
+	int wdt_nb;
+
+	wdt_nb = tab->wdt;
+	wdt_nb = wdt_nb * 10 + (format[pos] - '0');
+	if (tab->pnt == 0)
+		tab->wdt = wdt_nb;
+	else if (tab->pnt == 1)
+		tab->prc = wdt_nb;
 }

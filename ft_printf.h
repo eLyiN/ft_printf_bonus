@@ -6,13 +6,13 @@
 /*   By: aarribas <aarribas@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 19:53:26 by aarribas          #+#    #+#             */
-/*   Updated: 2022/05/14 23:00:22 by aarribas         ###   ########.fr       */
+/*   Updated: 2022/05/17 08:20:46 by aarribas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_PRINTF_H
 # define FT_PRINTF_H
-# define SYMBOLALLOW "cspdiuxX%"
+# define SYMBOLS "#-+ .*0123456789"
 # include "../libft/libft.h"
 # include <stdarg.h>
 # include <stdint.h>
@@ -29,7 +29,8 @@ typedef struct s_print
 	int tl;       //# total_length (return value)
 	int sign;     //# pos or neg number
 	int is_zero;  //# is number zero
-	int perc;     //# %
+	int astk;     //# asterisk
+	int hash;     //# #
 	int sp;       //# space flag ' '
 }		t_print;
 
@@ -48,5 +49,14 @@ int		ft_eval_format(t_print *tab, const char *format, int pos);
 int		ft_printf(const char *format, ...);
 int		ft_ptr_len(uintptr_t num);
 void	ft_put_ptr(uintptr_t num);
+//bonus
+int		ft_control_formats(t_print *tab, const char *format, int pos);
+int		ft_set_flags(t_print *tab, const char *format, int pos);
+void	process_wdt_p(t_print *tab, const char *format, int pos);
+void	ft_right_cs(t_print *tab, int len);
+void	ft_left_cs(t_print *tab, int len);
+void	ft_special_cases(t_print *tab, char *str);
+void	ft_asterisk(t_print *tab);
+void	ft_print_sign(t_print *tab, int nb);
 
 #endif

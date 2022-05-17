@@ -6,7 +6,7 @@
 /*   By: aarribas <aarribas@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 23:50:14 by aarribas          #+#    #+#             */
-/*   Updated: 2022/05/14 23:29:31 by aarribas         ###   ########.fr       */
+/*   Updated: 2022/05/16 23:12:18 by aarribas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,12 +53,19 @@ int	ft_print_hex(t_print *tab, char format)
 	nb = va_arg(tab->args, unsigned int);
 	if (nb == 0)
 	{
+		if (tab->wdt && !tab->dash)
+			ft_right_cs(tab, 1);
 		tab->tl += write(1, "0", 1);
+		if (tab->wdt && tab->dash)
+			ft_left_cs(tab, 1);
 		return (1);
 	}
-	else
-		ft_format_hex(nb, format);
+	else if (tab->wdt && !tab->dash)
+		ft_right_cs(tab, ft_lenght_hex(nb));
+	ft_format_hex(nb, format);
 	tab->tl += ft_lenght_hex(nb);
+	if (tab->wdt && tab->dash)
+		ft_left_cs(tab, ft_lenght_hex(nb));
 	return (1);
 }
 

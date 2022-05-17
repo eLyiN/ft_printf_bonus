@@ -6,7 +6,7 @@
 /*   By: aarribas <aarribas@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 19:51:58 by aarribas          #+#    #+#             */
-/*   Updated: 2022/05/14 23:29:35 by aarribas         ###   ########.fr       */
+/*   Updated: 2022/05/17 16:08:17 by aarribas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 t_print	*ft_initialise_tab(t_print *tab)
 {
-	tab->wdt = 0; //# we set everything to 0, false
+	tab->wdt = 0;
 	tab->prc = 0;
 	tab->zero = 0;
 	tab->pnt = 0;
@@ -22,8 +22,9 @@ t_print	*ft_initialise_tab(t_print *tab)
 	tab->tl = 0;
 	tab->is_zero = 0;
 	tab->dash = 0;
-	tab->perc = 0;
+	tab->hash = 0;
 	tab->sp = 0;
+	tab->astk = 0;
 	return (tab);
 }
 
@@ -40,10 +41,10 @@ int	ft_printf(const char *format, ...)
 	va_start(tab->args, format);
 	i = 0;
 	ret = 0;
-	while (format[i]) //while string exist
+	while (format[i])
 	{
 		if (format[i] == '%')
-			i = ft_eval_format(tab, format, i + 1);
+			i = ft_control_formats(tab, format, i);
 		else
 			ret += write(1, &format[i], 1);
 		i++;
@@ -52,6 +53,18 @@ int	ft_printf(const char *format, ...)
 	ret += tab->tl;
 	free(tab);
 	return (ret);
+}
+
+int	ft_control_formats(t_print *tab, const char *format, int pos)
+{
+	int	i;
+
+	i = pos;
+	i++;
+	if (ft_strchr(SYMBOLS, format[i]))
+		i = ft_set_flags(tab, format, i);
+	i = ft_eval_format(tab, format, i);
+	return (i);
 }
 
 int	ft_eval_format(t_print *tab, const char *format, int pos)
@@ -70,5 +83,30 @@ int	ft_eval_format(t_print *tab, const char *format, int pos)
 		ft_print_hex(tab, format[pos]);
 	else if (format[pos] == '%')
 		ft_print_procent(tab);
+	return (pos);
+}
+
+int	ft_set_flags(t_print *tab, const char *format, int pos)
+{
+	while (!ft_strchr("cspdiuxX%", format[pos]))
+	{
+		if (ft_strchr("0123456789", format[pos]))
+			process_wdt_p(tab, format, pos);
+		else if (format[pos] == '-')
+			tab->dash = 1;
+		else if (format[pos] == '0')
+			tab->is_zero = 1;
+		else if (format[pos] == '.')
+			tab->pnt = 1;
+		else if (format[pos] == '#')
+			tab->hash = 1;
+		else if (format[pos] == ' ')
+			tab->sp = 1;
+		else if (format[pos] == '+')
+			tab->sign = 1;
+		else if (format[pos] == '*')
+			ft_asterisk(tab);
+		pos++;
+	}
 	return (pos);
 }

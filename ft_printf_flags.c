@@ -1,40 +1,44 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf_csp.c                                    :+:      :+:    :+:   */
+/*   ft_printf_flags.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aarribas <aarribas@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/12 23:50:44 by aarribas          #+#    #+#             */
-/*   Updated: 2022/05/14 16:34:21 by aarribas         ###   ########.fr       */
+/*   Created: 2022/05/17 00:12:24 by aarribas          #+#    #+#             */
+/*   Updated: 2022/05/17 08:20:32 by aarribas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int	ft_print_char(t_print *tab)
+void	ft_flag_zero(t_print *tab, int len)
 {
-	char	c;
+	int	nb_zero;
 
-	c = va_arg(tab->args, int);
-	tab->tl += write(1, &c, 1);
-	return (1);
-}
-int	ft_print_string(t_print *tab)
-{
-	char *str;
-	int i;
-
-	i = 0;
-	str = va_arg(tab->args, char *);
-	if (str == NULL)
+	if (tab->is_zero == 0)
+		return ;
+	nb_zero = tab->wdt;
+	if (len > nb_zero)
 	{
-		write(1, "(null)", 6);
-		tab->tl += 6;
-		return (1);
+		tab->wdt = 0;
+		return ;
 	}
-	while (str[i])
-		write(1, &str[i++], 1);
-	tab->tl += i;
-	return (1);
+	else
+		nb_zero -= len;
+	tab->tl += nb_zero;
+	while (nb_zero != 0)
+	{
+		write(1, "0", 1);
+		nb_zero -= 1;
+	}
+	tab->wdt = 0;
+	tab->is_zero = 0;
+}
+
+void	ft_print_sign(t_print *tab, int nb)
+{
+	if (tab->sign == 1 && nb > 0)
+		write(1, "+", 1);
+	tab->sign = 0;
 }
