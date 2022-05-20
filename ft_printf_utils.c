@@ -6,7 +6,7 @@
 /*   By: aarribas <aarribas@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 22:45:58 by aarribas          #+#    #+#             */
-/*   Updated: 2022/05/16 21:37:11 by aarribas         ###   ########.fr       */
+/*   Updated: 2022/05/20 07:30:03 by aarribas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,12 +54,32 @@ char	*ft_uitoa(unsigned int n)
 
 void	process_wdt_p(t_print *tab, const char *format, int pos)
 {
-	int wdt_nb;
+	int	nb;
 
-	wdt_nb = tab->wdt;
-	wdt_nb = wdt_nb * 10 + (format[pos] - '0');
 	if (tab->pnt == 0)
-		tab->wdt = wdt_nb;
+	{
+		nb = tab->wdt;
+		nb = nb * 10 + (format[pos] - '0');
+		tab->wdt = nb;
+	}
 	else if (tab->pnt == 1)
-		tab->prc = wdt_nb;
+	{
+		nb = tab->prc;
+		nb = nb * 10 + (format[pos] - '0');
+		tab->prc = nb;
+	}
+}
+
+void	ft_sanitize_tab(t_print *tab)
+{
+	tab->wdt = 0;
+	tab->prc = 0;
+	tab->zero = 0;
+	tab->pnt = 0;
+	tab->sign = 0;
+	tab->is_zero = 0;
+	tab->dash = 0;
+	tab->hash = 0;
+	tab->sp = 0;
+	tab->astk = 0;
 }

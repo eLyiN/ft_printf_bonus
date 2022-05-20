@@ -6,7 +6,7 @@
 /*   By: aarribas <aarribas@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 19:51:58 by aarribas          #+#    #+#             */
-/*   Updated: 2022/05/17 16:08:17 by aarribas         ###   ########.fr       */
+/*   Updated: 2022/05/20 07:50:53 by aarribas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ int	ft_control_formats(t_print *tab, const char *format, int pos)
 	if (ft_strchr(SYMBOLS, format[i]))
 		i = ft_set_flags(tab, format, i);
 	i = ft_eval_format(tab, format, i);
+	ft_sanitize_tab(tab);
 	return (i);
 }
 
@@ -88,24 +89,27 @@ int	ft_eval_format(t_print *tab, const char *format, int pos)
 
 int	ft_set_flags(t_print *tab, const char *format, int pos)
 {
+	if (format[pos] == '0')
+	{
+		tab->is_zero = 1;
+		pos++;
+	}
 	while (!ft_strchr("cspdiuxX%", format[pos]))
 	{
+		if (format[pos] == '-')
+			tab->dash = 1;
+		if (format[pos] == '.')
+			tab->pnt = 1;
+		if (format[pos] == '#')
+			tab->hash = 1;
+		if (format[pos] == ' ')
+			tab->sp = 1;
+		if (format[pos] == '+')
+			tab->sign = 1;
+		if (format[pos] == '*')
+			ft_asterisk(tab);
 		if (ft_strchr("0123456789", format[pos]))
 			process_wdt_p(tab, format, pos);
-		else if (format[pos] == '-')
-			tab->dash = 1;
-		else if (format[pos] == '0')
-			tab->is_zero = 1;
-		else if (format[pos] == '.')
-			tab->pnt = 1;
-		else if (format[pos] == '#')
-			tab->hash = 1;
-		else if (format[pos] == ' ')
-			tab->sp = 1;
-		else if (format[pos] == '+')
-			tab->sign = 1;
-		else if (format[pos] == '*')
-			ft_asterisk(tab);
 		pos++;
 	}
 	return (pos);

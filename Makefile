@@ -6,13 +6,13 @@
 #    By: aarribas <aarribas@student.42malaga.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/02 15:33:13 by aarribas          #+#    #+#              #
-#    Updated: 2022/05/17 00:15:15 by aarribas         ###   ########.fr        #
+#    Updated: 2022/05/17 23:14:10 by aarribas         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 SRCS	=	ft_printf_cs.c ft_printf_diu.c ft_printf_ptr.c ft_printf_utils.c \
 			ft_printf_xX%.c ft_printf.c ft_printf_width.c ft_printf_flags.c \
-			ft_precision.c
+			ft_printf_precision.c
 
 
 RM				= rm -f

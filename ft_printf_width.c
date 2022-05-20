@@ -6,7 +6,7 @@
 /*   By: aarribas <aarribas@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 19:00:17 by aarribas          #+#    #+#             */
-/*   Updated: 2022/05/17 16:08:17 by aarribas         ###   ########.fr       */
+/*   Updated: 2022/05/19 22:56:43 by aarribas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,11 @@ void	ft_right_cs(t_print *tab, int len)
 {
 	int	wdt_right;
 
+	if (tab->is_zero == 1 && tab->wdt)
+	{
+		ft_flag_zero(tab, len);
+		return ;
+	}
 	wdt_right = tab->wdt;
 	if (len > wdt_right)
 	{
@@ -25,13 +30,13 @@ void	ft_right_cs(t_print *tab, int len)
 	else
 		wdt_right -= len;
 	tab->tl += wdt_right;
-	ft_flag_zero(tab, len);
+	if (tab->sign == 1)
+		wdt_right -= 1;
 	while (wdt_right != 0 && tab->is_zero == 0)
 	{
 		write(1, " ", 1);
 		wdt_right -= 1;
 	}
-	tab->wdt = 0;
 }
 
 void	ft_left_cs(t_print *tab, int len)
@@ -48,13 +53,13 @@ void	ft_left_cs(t_print *tab, int len)
 	else
 		wdt_left -= len;
 	tab->tl += wdt_left;
+	if (tab->sign == 1)
+		wdt_left -= 1;
 	while (wdt_left != 0 && tab->is_zero == 0)
 	{
 		write(1, " ", 1);
 		wdt_left -= 1;
 	}
-	tab->wdt = 0;
-	tab->dash = 0;
 }
 
 void	ft_asterisk(t_print *tab)

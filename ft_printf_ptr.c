@@ -6,7 +6,7 @@
 /*   By: aarribas <aarribas@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 08:47:24 by aarribas          #+#    #+#             */
-/*   Updated: 2022/05/16 23:28:41 by aarribas         ###   ########.fr       */
+/*   Updated: 2022/05/18 19:26:59 by aarribas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,12 +59,13 @@ int	ft_print_pointer(t_print *tab)
 		tab->tl += 5;
 		return (1);
 	}
-	else
-	{
-		print_length += write(1, "0x", 2);
-		ft_put_ptr(ptr);
-		print_length += ft_ptr_len(ptr);
-	}
+	if (tab->wdt && !tab->dash)
+		ft_right_cs(tab, ft_ptr_len(ptr) + 2);
+	print_length += write(1, "0x", 2);
+	ft_put_ptr(ptr);
+	if (tab->wdt && tab->dash)
+		ft_left_cs(tab, ft_ptr_len(ptr) + 2);
+	print_length += ft_ptr_len(ptr);
 	tab->tl += print_length;
 	return (1);
 }

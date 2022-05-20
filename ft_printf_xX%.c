@@ -6,13 +6,13 @@
 /*   By: aarribas <aarribas@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 23:50:14 by aarribas          #+#    #+#             */
-/*   Updated: 2022/05/16 23:12:18 by aarribas         ###   ########.fr       */
+/*   Updated: 2022/05/19 21:38:22 by aarribas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int	ft_lenght_hex(unsigned int nb)
+int	ft_lenght_hex(t_print *tab, unsigned int nb)
 {
 	int	len;
 
@@ -22,6 +22,10 @@ int	ft_lenght_hex(unsigned int nb)
 		len++;
 		nb = nb / 16;
 	}
+	if (tab->hash == 1)
+		len = len + 2;
+	if (tab->hash == 1 && tab->sign == 1)
+		len = len + 4;
 	return (len);
 }
 
@@ -51,6 +55,11 @@ int	ft_print_hex(t_print *tab, char format)
 	unsigned int	nb;
 
 	nb = va_arg(tab->args, unsigned int);
+	if (tab->pnt == 1 && tab->prc >= ft_lenght_hex(tab, nb))
+	{
+		ft_prec_xX(tab, nb, format);
+		return (1);
+	}
 	if (nb == 0)
 	{
 		if (tab->wdt && !tab->dash)
@@ -61,11 +70,12 @@ int	ft_print_hex(t_print *tab, char format)
 		return (1);
 	}
 	else if (tab->wdt && !tab->dash)
-		ft_right_cs(tab, ft_lenght_hex(nb));
+		ft_right_cs(tab, ft_lenght_hex(tab, nb));
+	ft_print_hash(tab, format);
 	ft_format_hex(nb, format);
-	tab->tl += ft_lenght_hex(nb);
+	tab->tl += ft_lenght_hex(tab, nb);
 	if (tab->wdt && tab->dash)
-		ft_left_cs(tab, ft_lenght_hex(nb));
+		ft_left_cs(tab, ft_lenght_hex(tab, nb));
 	return (1);
 }
 

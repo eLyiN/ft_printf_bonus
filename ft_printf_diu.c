@@ -6,7 +6,7 @@
 /*   By: aarribas <aarribas@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 23:49:37 by aarribas          #+#    #+#             */
-/*   Updated: 2022/05/17 16:08:16 by aarribas         ###   ########.fr       */
+/*   Updated: 2022/05/20 07:55:50 by aarribas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,34 +16,42 @@ int	ft_print_s_integer(t_print *tab) //d & i
 {
 	int nb;
 	char *str;
-	int i;
 
 	nb = va_arg(tab->args, int);
 	str = ft_itoa(nb);
-	i = 0;
-	ft_print_sign(tab, nb);
+	if ((tab->pnt == 1 && tab->prc >= (int)ft_strlen(str)) || tab->is_zero == 1)
+	{
+		ft_prec_di(tab, str);
+		return (1);
+	}
 	if (tab->wdt && !tab->dash)
 		ft_right_cs(tab, ft_strlen(str));
-	while (str[i])
+	ft_print_sign(tab, nb);
+	if (!(nb == 0 && tab->prc == 0 && tab->pnt == 1))
 	{
-		write(1, &str[i], 1);
-		i++;
+		ft_putstr_fd(str, 1);
+		tab->tl += (int)ft_strlen(str);
 	}
-	if (tab->wdt && tab->dash)
+	if ((tab->wdt && tab->dash && !tab->pnt) || (tab->pnt == 1 && nb != 0))
 		ft_left_cs(tab, ft_strlen(str));
-	tab->tl += i;
+	else if (tab->wdt && tab->dash && tab->pnt && nb == 0)
+		ft_left_cs(tab, 0);
 	free(str);
 	return (1);
 }
+
 int	ft_print_u_integer(t_print *tab)
 {
 	unsigned int	nb;
 	char			*str;
-	int				i;
 
 	nb = va_arg(tab->args, unsigned int);
 	str = ft_uitoa(nb);
-	i = 0;
+	if (tab->pnt == 1 && tab->prc >= (int)ft_strlen(str))
+	{
+		ft_prec_u(tab, str);
+		return (1);
+	}
 	if (tab->wdt && !tab->dash)
 		ft_right_cs(tab, ft_strlen(str));
 	if (str == NULL)
@@ -51,14 +59,16 @@ int	ft_print_u_integer(t_print *tab)
 		tab->tl += write(1, "0", 1);
 		return (1);
 	}
-	while (str[i])
+	ft_print_sign(tab, nb);
+	if (!(nb == 0 && tab->prc == 0 && tab->pnt == 1))
 	{
-		write(1, &str[i], 1);
-		i++;
+		ft_putstr_fd(str, 1);
+		tab->tl += (int)ft_strlen(str);
 	}
-	if (tab->wdt && tab->dash)
+	if ((tab->wdt && tab->dash && !tab->pnt) || (tab->pnt == 1 && nb != 0))
 		ft_left_cs(tab, ft_strlen(str));
-	tab->tl += i;
+	else if (tab->wdt && tab->dash && tab->pnt && nb == 0)
+		ft_left_cs(tab, 0);
 	free(str);
 	return (1);
 }

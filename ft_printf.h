@@ -6,7 +6,7 @@
 /*   By: aarribas <aarribas@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 19:53:26 by aarribas          #+#    #+#             */
-/*   Updated: 2022/05/17 08:20:46 by aarribas         ###   ########.fr       */
+/*   Updated: 2022/05/20 07:39:04 by aarribas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int		ft_print_pointer(t_print *tab);
 int		ft_print_hex(t_print *tab, char format);
 int		ft_print_procent(t_print *tab);
 void	ft_format_hex(unsigned int nb, char format);
-int		ft_lenght_hex(unsigned int nb);
+int		ft_lenght_hex(t_print *tab, unsigned int nb);
 int		ft_print_u_integer(t_print *tab);
 int		ft_print_s_integer(t_print *tab);
 int		ft_print_string(t_print *tab);
@@ -58,5 +58,12 @@ void	ft_left_cs(t_print *tab, int len);
 void	ft_special_cases(t_print *tab, char *str);
 void	ft_asterisk(t_print *tab);
 void	ft_print_sign(t_print *tab, int nb);
+void	ft_flag_zero(t_print *tab, char *str);
+void	ft_print_hash(t_print *tab, char format);
+void	ft_prec_di(t_print *tab, char *str);
+void	ft_prec_u(t_print *tab, char *str);
+void	ft_prec_s(t_print *tab, char *str);
+void	ft_prec_xX(t_print *tab, unsigned int hex, char format);
+void	ft_sanitize_tab(t_print *tab);
 
 #endif
