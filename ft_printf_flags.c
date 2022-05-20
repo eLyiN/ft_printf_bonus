@@ -6,7 +6,7 @@
 /*   By: aarribas <aarribas@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 00:12:24 by aarribas          #+#    #+#             */
-/*   Updated: 2022/05/20 07:53:36 by aarribas         ###   ########.fr       */
+/*   Updated: 2022/05/21 01:15:33 by aarribas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,24 +19,29 @@ void	ft_flag_zero(t_print *tab, char *str)
 
 	nb_zero = tab->wdt;
 	if ((int)ft_strlen(str) > nb_zero)
-		return ;
+	{
+		ft_putstr_fd(str, 1);
+		tab->tl += ft_strlen(str);
+	}
 	else
+	{
 		nb_zero -= (int)ft_strlen(str);
-	tab->tl += nb_zero;
-	if (ft_atoi(str) < 0)
-	{
-		temp = ft_strdup((const char *)str + 1);
-		free(str);
-		str = temp;
-		tab->tl += write(1, "-", 1);
+		tab->tl += nb_zero;
+		if (ft_atoi(str) < 0)
+		{
+			temp = ft_strdup((const char *)str + 1);
+			free(str);
+			str = temp;
+			tab->tl += write(1, "-", 1);
+		}
+		while (nb_zero != 0)
+		{
+			write(1, "0", 1);
+			nb_zero -= 1;
+		}
+		ft_putstr_fd(str, 1);
+		tab->tl += (int)ft_strlen(str);
 	}
-	while (nb_zero != 0)
-	{
-		write(1, "0", 1);
-		nb_zero -= 1;
-	}
-	ft_putstr_fd(str, 1);
-	tab->tl += (int)ft_strlen(str);
 	free(str);
 	return ;
 }

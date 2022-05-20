@@ -6,7 +6,7 @@
 /*   By: aarribas <aarribas@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 00:13:20 by aarribas          #+#    #+#             */
-/*   Updated: 2022/05/20 07:55:06 by aarribas         ###   ########.fr       */
+/*   Updated: 2022/05/21 01:11:06 by aarribas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,6 @@ void	ft_prec_di(t_print *tab, char *str)
 	if (str == NULL)
 		ft_special_cases(tab, str);
 	prec = tab->prc;
-	if (tab->is_zero == 1)
-	{
-		ft_flag_zero(tab, str);
-		return ;
-	}
 	if (tab->wdt && !tab->dash)
 		ft_right_cs(tab, tab->prc);
 	if (ft_atoi(str) < 0)

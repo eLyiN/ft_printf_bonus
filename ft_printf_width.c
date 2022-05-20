@@ -6,7 +6,7 @@
 /*   By: aarribas <aarribas@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/15 19:00:17 by aarribas          #+#    #+#             */
-/*   Updated: 2022/05/19 22:56:43 by aarribas         ###   ########.fr       */
+/*   Updated: 2022/05/21 01:08:20 by aarribas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,6 @@ void	ft_right_cs(t_print *tab, int len)
 {
 	int	wdt_right;
 
-	if (tab->is_zero == 1 && tab->wdt)
-	{
-		ft_flag_zero(tab, len);
-		return ;
-	}
 	wdt_right = tab->wdt;
 	if (len > wdt_right)
 	{
