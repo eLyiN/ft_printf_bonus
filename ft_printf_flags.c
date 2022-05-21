@@ -6,7 +6,7 @@
 /*   By: aarribas <aarribas@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 00:12:24 by aarribas          #+#    #+#             */
-/*   Updated: 2022/05/21 01:15:33 by aarribas         ###   ########.fr       */
+/*   Updated: 2022/05/21 08:31:21 by aarribas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	ft_flag_zero(t_print *tab, char *str)
 	char	*temp;
 
 	nb_zero = tab->wdt;
-	if ((int)ft_strlen(str) > nb_zero)
+	if ((int)ft_strlen(str) > nb_zero && ft_atoi(str) != 0)
 	{
 		ft_putstr_fd(str, 1);
 		tab->tl += ft_strlen(str);
@@ -36,11 +36,19 @@ void	ft_flag_zero(t_print *tab, char *str)
 		}
 		while (nb_zero != 0)
 		{
-			write(1, "0", 1);
+			if (ft_atoi(str) != 0)
+				write(1, "0", 1);
+			else
+				write(1, " ", 1);
 			nb_zero -= 1;
 		}
-		ft_putstr_fd(str, 1);
-		tab->tl += (int)ft_strlen(str);
+		if (ft_atoi(str) != 0)
+		{
+			ft_putstr_fd(str, 1);
+			tab->tl += (int)ft_strlen(str);
+		}
+		else
+			tab->tl += write(1, " ", 1);
 	}
 	free(str);
 	return ;

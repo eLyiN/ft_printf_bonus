@@ -6,7 +6,7 @@
 /*   By: aarribas <aarribas@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 23:49:37 by aarribas          #+#    #+#             */
-/*   Updated: 2022/05/21 01:18:02 by aarribas         ###   ########.fr       */
+/*   Updated: 2022/05/21 08:27:12 by aarribas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,17 +19,17 @@ int	ft_print_s_integer(t_print *tab) //d & i
 
 	nb = va_arg(tab->args, int);
 	str = ft_itoa(nb);
-	if (tab->pnt == 1 && tab->prc >= (int)ft_strlen(str))
-	{
-		ft_prec_di(tab, str);
-		return (1);
-	}
+
 	if (tab->is_zero == 1)
 	{
 		ft_flag_zero(tab, str);
 		return (1);
 	}
-
+	if (tab->pnt == 1 && tab->prc >= (int)ft_strlen(str))
+	{
+		ft_prec_di(tab, str);
+		return (1);
+	}
 	if (tab->wdt && !tab->dash)
 		ft_right_cs(tab, ft_strlen(str));
 	ft_print_sign(tab, nb);
